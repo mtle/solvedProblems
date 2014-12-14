@@ -13,7 +13,7 @@
 #include <iomanip>
 #include <string>
 #include <memory>
-#include <cstdlib>
+#include <iterator>
 #include <vector>
 #include <new>
 #include <unordered_set>
@@ -28,27 +28,6 @@
 
 typedef unsigned int uint;
 using namespace std;
-
-template<typename T> void print(const vector<T>&);
-
-///////////////////////////////////////////////////////////////////////
-template<typename T>
-std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec)
-{
-    for (auto& el : vec) {
-        os << "[" << el << "] ";
-    }
-    return os;
-}
-typedef vector<vector<int>> Matrix;
-
-template<typename T> void print(const vector<T>& v)
-{
-	for (auto itr=v.begin(); itr!=v.end();++itr)
-			cout<<*itr <<" ";
-		
-	cout<<endl;
-}
 
 template<typename T> T Max(T x, T y)
 {
