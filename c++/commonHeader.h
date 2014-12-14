@@ -37,6 +37,22 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec)
 //////////////////////////////////////////////////////
 typedef vector<vector<int>> Matrix;
 
+template<typename T> void printVector(const vector<T> &v, int lo, int hi)
+{
+    if (lo*hi<0 || hi-lo<0) return;
+
+    auto start = std::next(v.begin(),lo);
+    auto end = std::next(v.begin(),hi);
+
+	cout<<endl;
+	cout<<"[ ";
+    
+ 	for (auto it=start; it!=end; ++it) {
+   		 cout<< *it << ", ";
+   	}
+	cout<<"]"<<endl;
+}
+
 void print(const Matrix& m) 
 { 
 	for (size_t i=0; i<m.size(); ++i) { 
@@ -61,44 +77,5 @@ template<typename T> void printMatrix(const vector<vector<T>>& v, int row, int c
    		 cout<<v[j][i]<<" ";
    	 }
 	}
-}
-
-template<typename T> void printArray(const vector<T> &v, int lo, int hi) const
-{
-	cout<<"\n[";
-    if ( 0==lo && 0==hi ) {
-   	 for ( auto x : v ) {
-   		 cout<<x<<", ";
-   	 }
-    } else if ( lo>=0 && hi>0 ) {
-   	 for (auto x=lo; x<=hi; ++x) {
-   		 cout<<v.at(x) << ", ";
-   	 }
-    } else {
-    	return;
-	}
-	cout<<"]"<<endl;
-}
-
-template<typename T> void printVector(const vector<T> &v, int lo, int hi) const
-{
-    if (lo*hi<0 || hi-lo<0) return;
-
-    auto start = std::next(v.begin(),lo);
-    auto end = std::next(v.begin(),hi);
-
-	cout<<"\n[";
-    if ( 0==lo && 0==hi ) {
-   	 for ( auto x : v ) {
-   		 cout<<x<<", ";
-   	 }
-    } else if ( lo>=0 && hi>0 ) {
-   	 for (auto x=lo; x<=hi; ++x) {
-   		 cout<<v.at(x) << ", ";
-   	 }
-    } else {
-    	return;
-	}
-	cout<<"]"<<endl;
 }
 
