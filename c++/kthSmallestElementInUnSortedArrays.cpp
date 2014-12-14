@@ -32,9 +32,9 @@ using namespace std;
 
 ///////////////////////////////////////////////////////////////////////
 template<typename T> 
-uint partition (vector<T> &v, uint lo, uint hi, T& pivot)
+uint partition (vector<T> &v, uint lo, uint hi)
 {
-    if (lo==hi) return;
+    if (lo==hi) return lo;
 
     pivot = v[lo];
     uint i=lo+1, j=hi;
@@ -51,28 +51,27 @@ uint partition (vector<T> &v, uint lo, uint hi, T& pivot)
         }
     } // end while
     swap (v[0], v[j]);
+    idx = j;
     return j;
 }
 
 template<typename T> 
 T kthSmallest (const vector<T> &v, uint lo, uint hi, uint k)
 {
-    T pivot;
-    uint i=0, j=0;
-
-    partition (v,lo,hi,pivot);
+    uint pivot = partition (v,lo,hi);
     if (k==pivot) return v[k];
-    else if (k>pivot)
-    else
-
-    return v[pivot];
+    else if (k>pivot) {
+        return kthSmallest (v,pivot+1,hi,k);
+    } else {
+        return kthSmallest (v,lo,pivot-1,k);
+    }
 }
 
 template<typename T> 
 T kthSmallest (const vector<T> &v, uint k)
 {
-    assert (k < 1 || k >= v.size());
-    return kthSmallest (v, k);
+    assert (k < 1 || k > v.size());
+    return kthSmallest (v, k-1);
 }
 
 /*****************************************************************************/
