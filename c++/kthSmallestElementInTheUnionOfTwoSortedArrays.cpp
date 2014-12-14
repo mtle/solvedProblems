@@ -37,6 +37,7 @@ similar to finding intersection of two sorted arrays.
 #include <bitset>
 #include <stdexcept>
 #include <cassert>
+#include <type_traits>
 
 typedef unsigned int uint;
 typedef vector<int> vi;
@@ -45,12 +46,12 @@ using namespace std;
 
 ///////////////////////////////////////////////////////////////////////
 template<typename T> 
-T kthSmalest (const vector<T> &v1, const vector<T>& v2, int k)
+T kthSmallest (const vector<T> &v1, const vector<T>& v2, int k)
 {
     T elem;
     int i=0, j=0;
 
-    static_assert (k >= v1.size() + v2.size());
+    //static_assert (k >= v1.size() + v2.size());
     while (k>0 && i<v1.size() && j<v2.size()) {
         if (v1[i] < v2[j]) {
             elem = v1[i];
@@ -86,5 +87,5 @@ int main()
     int k = 7;
 
     cout<<kthSmallest(v1,v2,k);
-    cout<endl;
+    cout<<endl;
 }
