@@ -1,0 +1,100 @@
+Binary search tree related questions 
+1. Check if binary tree is balanced or not?
+2. Zig Zag order traversal of tree.
+3. Prune all nodes of tree which are outside a range min and max.
+4. Find least common ancestor.
+5. Replace node with sum of children.
+6. Convert tree to DLL.
+7. Print last K nodes of binary search tree.
+8. Find pair of nodes with given sum.
+9. Level order traversal of tree.
+10.Build tree from given pre-order and inroder traversal.
+11. Tree traversals without recursion.
+12. Find paths in binary search tree of given sum.
+13. Calculate number of trees with N nodes.
+14. Print right view of binary search tree.
+15. Vertical sum of binary search tree.
+
+Array related questions
+1. Find missing missing number in an array.
+2. Find repeated number in an array.
+3. Find all duplicate numbers in an array.
+4. Find One missing and one repeated number in an array. 
+5. Smallest missing numbers in sorted array.
+6. Find element in first increasing and then decreasing array.
+7. Balanced subarray and zero sum sub array
+8. Rotate an array.
+9. Find element in rotated array.
+10.Sum of two numbers in array equal to K.
+11.In array of 0 and 1, find first occurrence of 1.
+12. Count sort.
+
+Matrix related questions
+1. Traverse a matrix in spiral order.
+2.  Make row and column 1 if there is 1 in it.
+3. Search an element in matrix of sorted rows and columns.
+4. Rotate a matrix by 90 degree.
+5. Find maximum sub matrix with all ones.
+
+Dynamic programming questions
+1. Longest increasing subsequence.
+2. Longest common subsequence
+3. Subset sum problem
+4. Largest sum contiguous sub array.
+5. Minimum Jumps to reach end
+6. Coin change
+7. Minimum Number of coins for change.
+8. Matrix multiplication
+9. Edit distance
+10. Longest palindrome substring
+11. Longest palindrome subsequence
+12. Strings : Check if string in interleaved of two strings.
+12. Cutting Rod
+
+String related questions
+1. Encoding of a string.
+2. Removal of duplicate characters.
+3. Find first duplicate character.
+4. Tokenize a string based on delimiter.
+5. Remove a particular combination of characters from string.
+6. Reverse words in a string.
+7. Check if string is combination of two strings.
+8. Break a string in meaningful dictionary words.
+9. First non repeating character in stream of characters.
+10. Check if two strings are anagrams.
+11. Check if any anagram of string is palindrome.
+
+Linked list related questions
+1. Find if there is loop in linked list.
+2. Add two numbers represented by linked lists.
+3. Merge two linked list.
+4. Find Nth node from end.
+5. Flatten a generic linked list.
+6. Delete a node from linked list.
+7. Check if linked list is palindrome.
+8. Clone linked list with arbitrary pointer.
+
+Heaps
+1. Merge K sorted arrays in one sorted array.
+2. Find K minimum elements in unsorted array.
+3. Find median in continuous stream of integers.
+4. Sliding window problem.
+5. Heaps basics.
+
+Graphs
+1.Depth First Search.
+2. Breadth First Search.
+3. Topological sorting.
+4. Minimum spanning tree: Prim's algorithm.
+5. Minimum spanning tree: Kruskal's algorithm.
+6. Shortest Path algorithm: Dijkstra's algorithm.
+7. Word ladder problem.
+8. Find connected components of graph.
+9. Detecting cycle in undirected graph.
+
+Miscellaneous
+1. Convert string to int, int to string.
+2. Find the next palindrome number.
+3. Print last N lines of file.
+4. Convert a string to equivalent number.
+5. Eight queen problem.
