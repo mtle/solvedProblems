@@ -3,7 +3,7 @@
 #include <iomanip>
 #include <string>
 #include <memory>
-#include <cstdlib>
+#include <limits>
 #include <vector>
 #include <new>
 #include <unordered_set>
@@ -12,6 +12,7 @@
 #include <map>
 #include <algorithm>
 #include <utility>
+#include <functional>
 #include <iterator>
 #include <bitset>
 #include <stdexcept>
@@ -81,6 +82,11 @@ template<typename T> void printArray(const vector<T> &v, int lo, int hi) const
 
 template<typename T> void printVector(const vector<T> &v, int lo, int hi) const
 {
+    if (lo*hi<0 || hi-lo<0) return;
+
+    auto start = std::next(v.begin(),lo);
+    auto end = std::next(v.begin(),hi);
+
 	cout<<"\n[";
     if ( 0==lo && 0==hi ) {
    	 for ( auto x : v ) {
