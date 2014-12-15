@@ -19,7 +19,7 @@ http://algorithmsandme.blogspot.ca/p/blog-page_27.html#.VIySytLF94h
 */
 
 #include <iostream>
-#include <climits>
+#include <limits>
 #include <vector>
 #include <map>
 #include <unordered_map>
@@ -29,16 +29,86 @@ http://algorithmsandme.blogspot.ca/p/blog-page_27.html#.VIySytLF94h
 
 using namespace std;
 
-template<typename valueType> struct Node
+template<typename T> struct Node
 {
-  valueType value;
-  Node<valueType> *left, *right;
-  Node(valueType v):value(v), left(nullptr), right(nullptr) {}
-  Node(valueType v, Node<valueType> *l=nullptr, Node<valueType> *r=nullptr) 
-    : value(v), left(l), right(r){}
+  T value;
+  Node<T> *left, *right, *parent;
+  Node(T v):value(v), left(nullptr), right(nullptr), parent(nullptr) {}
+  Node(T v, Node<T> *l=nullptr, Node<T> *r=nullptr, Node<T> *p=nullptr) 
+    : value(v), left(l), right(r), parent(p){}
 };
 
+template<> class binaryTree <int>
+{
+    public:
+        binaryTree():root(),count(0){}
+        virtual ~binaryTree();
+        virtual void insert(int);
+        void deleteNode(int);
+        void inorder();
+        bool isLeaf(Node<int>*);
+        Node<int>* successor(int);
+        Node<int>* predecessor(int);
 
+    protected:
+        void inorder(Node<int>*);
+
+        Node<int> *root;
+        uint count;
+};
+
+template<> Node<int>* binaryTree<int>::successor(int v)
+{
+    return root->left==nullptr && root->right==nullptr;
+}
+
+template<> Node<int>* binaryTree<int>::predecessor(int v)
+{
+    return root->left==nullptr && root->right==nullptr;
+}
+
+template<> bool binaryTree<int>::isLeaf(Node<int>* root)
+{
+    return root->left==nullptr && root->right==nullptr;
+}
+
+template<> Node<int>* binaryTree<int>::insert(Node<int>* root, int v)
+{
+    if (root==nullptr) {
+        Node<int>* n{v};
+        return n;
+    } 
+    else if (root->value <= v) root = insert(root->left,v);
+    else root = insert(root->right, v);
+}
+
+template<> void binaryTree<int>::insert(int v)
+{
+    if (root==nullptr) {
+        Node<int>* n{v};
+        root = n;
+    } else {
+        if (root->value <= v) root = insert(root->left,v);
+        else root = insert(root->right, v);
+    }
+}
+
+template<> void binaryTree<int>::inorder(Node<int>* root)
+{
+    if (root==nullptr) return;
+    inorder(root->left);
+    cout<<root;
+    inorder(root->right);
+}
+
+template<> void binaryTree<int>::inorder()
+{
+    inorder(root);
+}
+
+
+/*************************************************************/
+   
 int main()
 {
 }
