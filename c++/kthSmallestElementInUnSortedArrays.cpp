@@ -25,7 +25,7 @@
 #include <cassert>
 #include <type_traits>
 
- unsigned int uint;
+typedef unsigned int uint;
 #define vi vector<int>
 using namespace std;
 
@@ -56,14 +56,75 @@ uint partition (vector<T> &v, uint lo, uint hi)
 }
 
 template<typename T> 
+uint randomizedPartition (vector<T> &v, uint lo, uint hi)
+{
+    if (hi-lo>100) {
+        uint i = rand() % (hi-lo);    
+        swap(v[lo],v[lo+i]);
+    }
+    retutn partition (v, lo, hi);
+}
+
+template<typename T> 
 T kthSmallest (const vector<T> &v, uint lo, uint hi, uint k)
 {
-    uint pivot = partition (v,lo,hi);
+    if (lo==hi) return v[lo];
+
+    uint pivot = randomizedPartition (v,lo,hi);
+
     if (k==pivot) return v[k];
     else if (k>pivot) {
         return kthSmallest (v,pivot+1,hi,k);
     } else {
         return kthSmallest (v,lo,pivot-1,k);
+    }
+}
+
+template<typename T> 
+T medianOfMedians (vector<T> &v)
+{
+    if (5 >= v.size()) {
+        sort (v.begin(),v.end());
+        return v[v.size()/2];
+    }
+    // step 1: compute vector of medians of group of 5
+    auto start = v.begin();
+    auto end = std::next(v.begin(),5);
+    vector<T> medians;
+
+    for (uint i=0;i<v.size();i+=5) {
+        sort(start,end);
+        medians.push_back(*(start+3));
+        start = end;
+        end += 5;
+    }
+
+    sort(start,v.end());
+    medians.push_back(*(start+3));
+
+    // step 2: recursively call medianOfMedians
+    return medianOfMedians(medians);
+}
+
+template<typename T> 
+T randomizedSelect (vector<T>& v, uint lo, uint hi, uint k)
+{
+    if ( lo==hi ) return v[lo];
+
+}
+
+template<typename T> 
+T kthSelect (const vector<T> &v, uint lo, uint hi, uint k)
+{
+    if (lo==hi) return v[lo];
+
+    uint pivot = randomizedPartition (v,lo,hi);
+    
+    if (k==pivot) return v[k];
+    else if (k>pivot) {
+        return kthSelect (v,pivot+1,hi,k);
+    } else {
+        return kthSelect (v,lo,pivot-1,k);
     }
 }
 
