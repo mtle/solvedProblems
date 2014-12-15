@@ -18,11 +18,26 @@
 #include <stdexcept>
 #include <cassert>
 
+using namespace std;
+
 typedef unsigned int uint;
 typedef vector<int> vi;
 typedef vector<vector<int>> Matrix;
+//typedef pair<uint,uint> puii;
+struct puii
+{
+    uint one, two;
+    puii():one(0),two(0){};
+    puii(uint x, uint y):one(x),two(y){}
+    friend std::ostream& operator<<(ostream&, const puii&);
+};
 
-using namespace std;
+ostream& operator<<(ostream& os, const puii& p)
+{
+    os <<"(one,two) = (" << p.one << "," << p.two << ")" << endl;
+    return os;
+}
+
 
 /**
  * Given an unsorted non-repeating array of N integers.  The integers 
@@ -72,17 +87,19 @@ template<> uint findMissingNumber_orderedArray<uint> (const vector<uint>& v)
     return findMissingNumber_orderedArray<uint> (v,0,v.size());
 }
 
-template<> uint findTwoMissingNumber_orderedArray<uint> 
+template<> puii findTwoMissingNumber_orderedArray<uint> 
     (const vector<uint>& v, uint lo, uint hi, uint k)
 {
     uint mid = (lo+hi)/2;
     
     if (v[hi] - v[lo] == 3) {
-        return make_pair<uint,uint>(v[lo],v[hi]);
+        puii p{v[lo],v[hi]};
+        return p;
     } else if (v[mid] - mid == 2) {
-        uint first = findMissingNumber_orderedArray<uint> (v,lo,mid);
-        uint second = findMissingNumber_orderedArray<uint> (v,mid,hi);
-        return make_pair<uint,uint>(v[lo],v[hi]);
+        uint one = findMissingNumber_orderedArray<uint> (v,lo,mid);
+        uint two = findMissingNumber_orderedArray<uint> (v,mid+1,hi);
+        puii p{one,two};
+        return p;
     } else if (mid==v[mid]-1) { // both numbers are in the high side
         lo = mid;
         return findTwoMissingNumber_orderedArray<uint> (v,lo,hi,k);
@@ -96,6 +113,20 @@ template<> puii findTwoMissingNumber_orderedArray<uint> (const vector<uint>& v)
 {
     if (v.empty()) return 0;
     return findTwoMissingNumber_orderedArray<uint> (v,0,v.size(),2);
+}
+
+void test()
+{
+    vi v1{1,2,3,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+    cout <<"missing #: " <<findMissingNumber_orderedArray<uint> (v1);
+
+    vi v2{1,2,3,4,5,7,8,9,10,11,12,13,14,16,17,18,19,20};
+    vi v3{1,2,3,4,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+    vi v4{1,3,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+
+    cout<<"missing pair " << findTwoMissingNumber_orderedArray<uint> (v2);
+    cout<<"missing pair " << findTwoMissingNumber_orderedArray<uint> (v3);
+    cout<<"missing pair " << findTwoMissingNumber_orderedArray<uint> (v4);
 }
 
 
