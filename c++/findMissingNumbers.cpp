@@ -30,8 +30,7 @@ using namespace std;
  * Find the missing number.
  * Complexity: O(n) time, O(1) space
  */
-//template<typename elemType>
-template<> uint findMissingNumber_unsortedArray<uint> (const vector<uint>& v)
+template<> uint findMissingNumber_unorderedArray<uint> (const vector<uint>& v)
 {
     uint all, one;
 
@@ -47,8 +46,7 @@ template<> uint findMissingNumber_unsortedArray<uint> (const vector<uint>& v)
  * Find the missing number.
  * Complexity: O(logn) time, O(1) space
  */
-//template<typename elemType>
-template<> uint findMissingNumber_sortedArray<uint> (const vector<uint>& v,
+template<> uint findMissingNumber_orderedArray<uint> (const vector<uint>& v,
                                                      uint lo, uint hi)
 {
 //    if (v.empty()) return 0;
@@ -68,9 +66,36 @@ template<> uint findMissingNumber_sortedArray<uint> (const vector<uint>& v,
     }
 }
 
-
-template<> uint findMissingNumber_sortedArray<uint> (const vector<uint>& v)
+template<> uint findMissingNumber_orderedArray<uint> (const vector<uint>& v)
 {
     if (v.empty()) return 0;
-    return findMissingNumber_sortedArray<uint> (v,0,v.size());
+    return findMissingNumber_orderedArray<uint> (v,0,v.size());
 }
+
+template<> uint findTwoMissingNumber_orderedArray<uint> 
+    (const vector<uint>& v, uint lo, uint hi, uint k)
+{
+    uint mid = (lo+hi)/2;
+    
+    if (v[hi] - v[lo] == 3) {
+        return make_pair<uint,uint>(v[lo],v[hi]);
+    } else if (v[mid] - mid == 2) {
+        uint first = findMissingNumber_orderedArray<uint> (v,lo,mid);
+        uint second = findMissingNumber_orderedArray<uint> (v,mid,hi);
+        return make_pair<uint,uint>(v[lo],v[hi]);
+    } else if (mid==v[mid]-1) { // both numbers are in the high side
+        lo = mid;
+        return findTwoMissingNumber_orderedArray<uint> (v,lo,hi,k);
+    } else if (v[mid] - mid >= 3) { // both are in the low side
+        hi = mid;
+        return findTwoMissingNumber_orderedArray<uint> (v,lo,hi,k);
+    }
+}
+
+template<> puii findTwoMissingNumber_orderedArray<uint> (const vector<uint>& v)
+{
+    if (v.empty()) return 0;
+    return findTwoMissingNumber_orderedArray<uint> (v,0,v.size(),2);
+}
+
+
