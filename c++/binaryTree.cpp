@@ -33,9 +33,38 @@ template<typename T> struct Node
 {
   T value;
   Node<T> *left, *right, *parent;
+  
   Node(T v):value(v), left(nullptr), right(nullptr), parent(nullptr) {}
   Node(T v, Node<T> *l=nullptr, Node<T> *r=nullptr, Node<T> *p=nullptr) 
     : value(v), left(l), right(r), parent(p){}
+  Node<T>* newnode(int v)
+  		{
+  				Node<T>* t = new Node<T>(v);
+  				return t;
+  		}
+};
+
+template<class T> class binaryTree
+{
+    public:
+        binaryTree():root(),count(0){}
+        virtual ~binaryTree();
+        virtual void insert (T);
+        void deleteNode (T);
+        void inorder ();
+        bool isLeaf (Node<T>*);
+        Node<T>* successor (Node<T>*);
+        Node<T>* predecessor (Node<T>*);
+        Node<T>* find (T v);
+
+    protected:
+        void inorder (Node<int>*);
+        Node<T>* find_recur (Node<T>*,T);
+        virtual Node<int>* insert (Node<int>*, int);
+        virtual void delTree (Node<T>*);
+
+        Node<T> *root;
+        uint count;
 };
 
 template<> class binaryTree <int>
@@ -43,57 +72,106 @@ template<> class binaryTree <int>
     public:
         binaryTree():root(),count(0){}
         virtual ~binaryTree();
-        virtual void insert(int);
-        void deleteNode(int);
-        void inorder();
-        bool isLeaf(Node<int>*);
-        Node<int>* successor(int);
-        Node<int>* predecessor(int);
+        virtual void insert (int);
+        void deleteNode (int);
+        void inorder ();
+        bool isLeaf (Node<int>*);
+        Node<int>* successor (Node<int>*);
+        Node<int>* predecessor (Node<int>*);
+        Node<int>* find (int v);
 
     protected:
-        void inorder(Node<int>*);
+        void inorder (Node<int>*);
+        Node<int>* find_recur (Node<int>*,int);
+        virtual Node<int>* insert (Node<int>*, int);
+        virtual void delTree (Node<int>*);
 
         Node<int> *root;
         uint count;
 };
 
-template<> Node<int>* binaryTree<int>::successor(int v)
+binaryTree::~binaryTree ()
+{
+		delTree (root);
+}
+
+void binaryTree<int>::delTree (Node<int>* node)
+{
+		if (node==nullptr) return;
+		else {
+				delTree (node->left);
+				delTree (node->right);
+				delete node;
+		}
+}
+
+Node<int>* binaryTree<int>::successor (Node<int>* root)
+{
+		Node<int>* p;
+		if (root->right != nullptr) {
+				p = root->right;
+				while (p->left!=nullptr) {
+						p = p->left;
+				}
+		} else {
+				p = root->parent;
+				while (p!=nullptr) {
+						if (root==p->left) break;
+						root = p;
+						p = p->parent;
+				}
+		}
+				
+			return p;
+}
+
+Node<int>* binaryTree<int>::predecessor (Node<int>* root)
+{
+    Node<int>* p;
+    
+    if (root->left != nullptr) {
+    			p = root->left;
+    			while (p->right!=nullptr) p = p->right;
+    	} else {
+    			p = root->parent;
+    			while (root!=nullptr) {
+    					if (root==p->right) break;
+    					root = p;
+    					p = p->parent;
+    			}
+    	}
+    	return p;
+}
+
+bool binaryTree<int>::isLeaf (Node<int>* root)
 {
     return root->left==nullptr && root->right==nullptr;
 }
 
-template<> Node<int>* binaryTree<int>::predecessor(int v)
-{
-    return root->left==nullptr && root->right==nullptr;
-}
-
-template<> bool binaryTree<int>::isLeaf(Node<int>* root)
-{
-    return root->left==nullptr && root->right==nullptr;
-}
-
-template<> Node<int>* binaryTree<int>::insert(Node<int>* root, int v)
+Node<int>* binaryTree<int>::insert (Node<int>* root, int v)
 {
     if (root==nullptr) {
-        Node<int>* n{v};
+        Node<int>* n = new Node<int>(v);
+        ++count;
         return n;
     } 
     else if (root->value <= v) root = insert(root->left,v);
     else root = insert(root->right, v);
 }
 
-template<> void binaryTree<int>::insert(int v)
+void binaryTree<int>::insert (int v)
 {
     if (root==nullptr) {
-        Node<int>* n{v};
+        Node<int>* n = new Node<int>(v);
         root = n;
+        ++count;
     } else {
         if (root->value <= v) root = insert(root->left,v);
         else root = insert(root->right, v);
     }
 }
 
-template<> void binaryTree<int>::inorder(Node<int>* root)
+void binaryTree<int>::inorder (Node<int>* root)
 {
     if (root==nullptr) return;
     inorder(root->left);
@@ -101,11 +179,39 @@ template<> void binaryTree<int>::inorder(Node<int>* root)
     inorder(root->right);
 }
 
-template<> void binaryTree<int>::inorder()
+void binaryTree<int>::inorder ()
 {
     inorder(root);
 }
 
+void binaryTree<int>::deleteNode (int v)
+{
+
+}
+
+Node<int>* binaryTree<int>::find_recur (Node<int>* root, int v)
+{
+		if (root==nullptr) return nullptr;
+		
+		if (v==root->value) return root;
+		else if (v < root->value)
+				return find_recur (root->left,v);
+		else return find_recur (root->right,v);
+}
+
+Node<int>* binaryTree<int>::find (int v)
+{
+		Node<int>* t = root;
+		
+		//return find_recur (t,v);
+		while (t!=nullptr) {
+				if (v==t->value) break;
+				else if (v<t->value) t = t->left;
+				else t = t->right;
+		}
+		
+		return t;
+}
 
 /*************************************************************/
    
