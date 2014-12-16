@@ -40,9 +40,23 @@ dist-clean: clean
 #  Before issuing any command in a target rule set there are 
 #  certain special macros predefined.
 
-#  $@ is the name of the file to be made.
+#  $@ is the name of the file to be made [the name of the target].
 
 #  $? is the names of the changed dependents.
+#  The $? macro stores the list of dependents more recent than the
+#  target (i.e., those that have changed since the last time make 
+#  was invoked for the given target).
+
+#  $^ gives you all dependencies, regardless of whether they are more 
+#  recent than the target. Duplicate names, however, will be removed. 
+
+#  $+ is like $^, but it keeps duplicates and gives you the entire list
+#  of dependencies in the order they appear.
+
+#  $< gives the first dependency.  Using $< can be safer than relying 
+#  on $^ when you have only a single dependency that needs to appear 
+#  in the commands executed by the target.
+
 
 #  So, for example, we could use a rule
 
