@@ -31,17 +31,13 @@ using namespace std;
 
 template<typename T> struct Node
 {
-  T value;
-  Node<T> *left, *right, *parent;
-  
-  Node(T v):value(v), left(nullptr), right(nullptr), parent(nullptr) {}
-  Node(T v, Node<T> *l=nullptr, Node<T> *r=nullptr, Node<T> *p=nullptr) 
-    : value(v), left(l), right(r), parent(p){}
-  Node<T>* newnode(int v)
-  		{
-  				Node<T>* t = new Node<T>(v);
-  				return t;
-  		}
+    T value;
+    Node<T> *left, *right, *parent;
+
+    Node():value(0), left(nullptr), right(nullptr), parent(nullptr) {}
+    Node(T v):value(v), left(nullptr), right(nullptr), parent(nullptr) {}
+    Node(T v, Node<T> *l=nullptr, Node<T> *r=nullptr, Node<T> *p=nullptr) 
+        : value(v), left(l), right(r), parent(p){}
 };
 
 template<class T> class binaryTree
@@ -92,55 +88,55 @@ template<> class binaryTree <int>
 
 binaryTree::~binaryTree ()
 {
-		delTree (root);
+    delTree (root);
 }
 
 void binaryTree<int>::delTree (Node<int>* node)
 {
-		if (node==nullptr) return;
-		else {
-				delTree (node->left);
-				delTree (node->right);
-				delete node;
-		}
+    if (node==nullptr) return;
+    else {
+        delTree (node->left);
+        delTree (node->right);
+        delete node;
+    }
 }
 
 Node<int>* binaryTree<int>::successor (Node<int>* root)
 {
-		Node<int>* p;
-		if (root->right != nullptr) {
-				p = root->right;
-				while (p->left!=nullptr) {
-						p = p->left;
-				}
-		} else {
-				p = root->parent;
-				while (p!=nullptr) {
-						if (root==p->left) break;
-						root = p;
-						p = p->parent;
-				}
-		}
-				
-			return p;
+    Node<int>* p;
+    if (root->right != nullptr) {
+        p = root->right;
+        while (p->left!=nullptr) {
+            p = p->left;
+        }
+    } else {
+        p = root->parent;
+        while (p!=nullptr) {
+            if (root==p->left) break;
+            root = p;
+            p = p->parent;
+        }
+    }
+
+    return p;
 }
 
 Node<int>* binaryTree<int>::predecessor (Node<int>* root)
 {
     Node<int>* p;
-    
+
     if (root->left != nullptr) {
-    			p = root->left;
-    			while (p->right!=nullptr) p = p->right;
-    	} else {
-    			p = root->parent;
-    			while (root!=nullptr) {
-    					if (root==p->right) break;
-    					root = p;
-    					p = p->parent;
-    			}
-    	}
-    	return p;
+        p = root->left;
+        while (p->right!=nullptr) p = p->right;
+    } else {
+        p = root->parent;
+        while (root!=nullptr) {
+            if (root==p->right) break;
+            root = p;
+            p = p->parent;
+        }
+    }
+    return p;
 }
 
 bool binaryTree<int>::isLeaf (Node<int>* root)
@@ -151,7 +147,8 @@ bool binaryTree<int>::isLeaf (Node<int>* root)
 Node<int>* binaryTree<int>::insert (Node<int>* root, int v)
 {
     if (root==nullptr) {
-        Node<int>* n = new Node<int>(v);
+        Node<int>* n = new Node<int>();
+        n->value = v;
         ++count;
         return n;
     } 
@@ -162,7 +159,8 @@ Node<int>* binaryTree<int>::insert (Node<int>* root, int v)
 void binaryTree<int>::insert (int v)
 {
     if (root==nullptr) {
-        Node<int>* n = new Node<int>(v);
+        Node<int>* n = new Node<int>();
+        n->value = v;
         root = n;
         ++count;
     } else {
@@ -191,26 +189,26 @@ void binaryTree<int>::deleteNode (int v)
 
 Node<int>* binaryTree<int>::find_recur (Node<int>* root, int v)
 {
-		if (root==nullptr) return nullptr;
-		
-		if (v==root->value) return root;
-		else if (v < root->value)
-				return find_recur (root->left,v);
-		else return find_recur (root->right,v);
+    if (root==nullptr) return nullptr;
+
+    if (v==root->value) return root;
+    else if (v < root->value)
+        return find_recur (root->left,v);
+    else return find_recur (root->right,v);
 }
 
 Node<int>* binaryTree<int>::find (int v)
 {
-		Node<int>* t = root;
-		
-		//return find_recur (t,v);
-		while (t!=nullptr) {
-				if (v==t->value) break;
-				else if (v<t->value) t = t->left;
-				else t = t->right;
-		}
-		
-		return t;
+    Node<int>* t = root;
+
+    //return find_recur (t,v);
+    while (t!=nullptr) {
+        if (v==t->value) break;
+        else if (v<t->value) t = t->left;
+        else t = t->right;
+    }
+
+    return t;
 }
 
 /*************************************************************/
