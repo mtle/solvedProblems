@@ -45,7 +45,7 @@ bool isMatched (const string& str)
                 case '}' :
                     if ( S.top()=='{' ) S.pop();
                 break;
-                case '(' :
+                case ')' :
                     if ( S.top()=='(' ) S.pop();
                 break;
                 default :
@@ -66,6 +66,6 @@ void test ()
     string s3{"()[]{([]))"};
 
     cout<<s1<<" - matched: "<<isMatched(s1)<<endl;
-    cout<<s2<<" - matched: "<<isMatched(s1)<<endl;
-    cout<<s3<<" - matched: "<<isMatched(s1)<<endl;
+    cout<<s2<<" - matched: "<<isMatched(s2)<<endl;
+    cout<<s3<<" - matched: "<<isMatched(s3)<<endl;
 }
