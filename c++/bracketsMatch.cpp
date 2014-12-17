@@ -58,3 +58,14 @@ bool isMatched (const string& str)
     if ( S.empty() ) return true;
     return false;
 }
+
+void test ()
+{
+    string s1{"()[]{([])}"};
+    string s2{"()[]{([]])}"};
+    string s3{"()[]{([]))"};
+
+    cout<<s1<<" - matched: "<<isMatched(s1)<<endl;
+    cout<<s2<<" - matched: "<<isMatched(s1)<<endl;
+    cout<<s3<<" - matched: "<<isMatched(s1)<<endl;
+}
