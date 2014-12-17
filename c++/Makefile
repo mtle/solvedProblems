@@ -1,10 +1,23 @@
 CC=gcc
 CXX=g++
 RM=rm -f
+
+ARCH := $(shell uname -m)
+
+### to build ARM target:
+# $ make TARGET=armel
+# #
+#
+ifeq ($(ARCH), armv5tel)
+CFLAGS=-g -DDEBUG=0
+CXXFLAGS=-g -DDEBUG=0
+LDFLAGS=-g
+else
 CFLAGS=-g -std=c++11 -std=gnu++11 -DDEBUG=0
 CXXFLAGS=-g -std=c++11 -std=gnu++11 -DDEBUG=0
 LDFLAGS=-g -std=c++11 -std=gnu++11
 LDLIBS=
+endif
 
 #OBJS=*.o
 #OBJS=$(subst .cpp,.o,$(SRCS))
@@ -19,6 +32,8 @@ EXE=mysort
 #all: ${EXE}
 all: ALL
 
+test:
+	    @echo ${TARGET} ${CFLAGS} ${CXXFLAGS}
 ALL: *.cpp
 	    $(CXX) $(CXXFLAGS) $(LDFLAGS) $< $(LDLIBS) 
 
