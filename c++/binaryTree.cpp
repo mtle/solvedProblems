@@ -38,7 +38,14 @@ template<typename T> struct Node
     Node(T v):value(v), left(nullptr), right(nullptr), parent(nullptr) {}
     Node(T v, Node<T> *l=nullptr, Node<T> *r=nullptr, Node<T> *p=nullptr) 
         : value(v), left(l), right(r), parent(p){}
+    friend ostream& operator<<(ostream& os, const Node<int>& n);
 };
+
+ostream& operator<<(ostream& os, const Node<int>& n)
+{
+        os<<"[" << n.value << "]";
+            return os;
+}
 
 template<class T> class binaryTree
 {
@@ -215,4 +222,13 @@ Node<int>* binaryTree<int>::find (int v)
    
 int main()
 {
+    vector<int>v{9,2,8,3,19,4,5,10,11,30,1};
+    binaryTree<int> *tree = new binaryTree<int>();
+
+    for (auto x:v) tree->insert(x);
+
+    cout<<"\nCount = " << tree->nodeCount();
+    cout<<"\nInorder traversal: ";
+    tree->inorder();
+    cout<<endl;
 }
