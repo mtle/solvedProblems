@@ -43,8 +43,8 @@ template<typename T> struct Node
 
 ostream& operator<<(ostream& os, const Node<int>& n)
 {
-        os<<"[" << n.value << "]";
-            return os;
+    os<<"[" << n.value << "]";
+    return os;
 }
 
 template<class T> class binaryTree
@@ -180,7 +180,7 @@ void binaryTree<int>::inorder (Node<int>* root)
 {
     if (root==nullptr) return;
     inorder(root->left);
-    cout<<root;
+    cout<<root->value;
     inorder(root->right);
 }
 
@@ -227,7 +227,6 @@ int main()
 
     for (auto x:v) tree->insert(x);
 
-    cout<<"\nCount = " << tree->nodeCount();
     cout<<"\nInorder traversal: ";
     tree->inorder();
     cout<<endl;
