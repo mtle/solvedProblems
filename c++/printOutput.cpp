@@ -51,7 +51,7 @@ template<typename T> T Max(T x, T y)
 	return (x >= y) ? x : y;
 }
 
-template<typename T> void printMatrix(const vector<vector<T>>& v, int row, int col) const
+template<typename T> void printMatrix(const vector<vector<T>>& v, int row, int col)
 {
 	for( auto j=0; j<col; ++j ) {
    	 cout<<endl;
@@ -61,7 +61,7 @@ template<typename T> void printMatrix(const vector<vector<T>>& v, int row, int c
 	}
 }
 
-template<typename T> void printArray(const vector<T> &v, int lo, int hi) const
+template<typename T> void printArray(const vector<T> &v, int lo, int hi)
 {
 	cout<<"\n[";
     if ( 0==lo && 0==hi ) {
@@ -78,7 +78,7 @@ template<typename T> void printArray(const vector<T> &v, int lo, int hi) const
 	cout<<"]"<<endl;
 }
 
-template<typename T> void printVector(const vector<T> &v, int lo, int hi) const
+template<typename T> void printVector(const vector<T> &v, int lo, int hi)
 {
 	cout<<"\n[";
     if ( 0==lo && 0==hi ) {

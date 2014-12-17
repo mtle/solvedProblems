@@ -37,53 +37,95 @@ struct Point
     int x, y;
     Point():x(0),y(0){}
     Point(int x_, int y_):x(x_),y(y_){}
+    friend ostream& operator<<(ostream& os, Point const &p);
 };
+
+ostream& operator<<(ostream& os, Point const &p)
+{
+    os << "(" << p.x << "," <<p.y <<")";
+    return os;
+}
 
 struct rect
 {
-    Point upper, lower;
+    Point left, right;
     int width, length;
-    rect():upper(0,0),lower(0,0){}
+    rect():left(0,0),right(0,0){}
     rect(int x1, int y1, int x2, int y2) 
-        : upper(x1,y1),lower(x2,y2),
+        : left(x1,y1),right(x2,y2),
           width(x2-x1),length(y2-y1)
         {}
+    void setLeft (int,int);
+    void setRight (int,int);
+    friend ostream& operator<<(ostream& os, rect const &r);
 };
+ostream& operator<<(ostream& os, rect const &r)
+{
+    os << "{ " << r.left << ", " << r.right << " }" << endl;
+    return os;
+}
+void rect::setLeft (int x, int y) {
+    this->left.x = x;
+    this->left.y = y;
+}
+void rect::setRight (int x, int y) {
+    this->right.x = x;
+    this->right.y = y;
+}
 
 bool isOverlap (const rect& a, const rect& b)
 {
-// if a.upper.x > b.lower.x
-// if a.lower.x < b.upper.x
-// if a.upper.y < b.lower.y
-// if a.lower.y > b.upper.y
+// if a.left.x >= b.right.x OR b.left.x >= a.right.x
+// if a.right.y >= b.left.y OR b.right.y >= a.left.y
   
-    if (a.upper.x > b.lower.x || a.lower.x < b.upper.x ||
-        a.upper.y < b.lower.y ||  a.lower.y > b.upper.y)
+    if (a.right.x <= b.left.x || 
+		b.right.x <= a.left.x ||
+        a.right.y <= b.left.y || 
+		b.right.y <= a.left.y)
         return false;
     else return true;
   
 }
 
-rect overlapRect (const rect& a, const rect& b)
+rect compute_overlapRect (const rect& a, const rect& b)
 {
     rect c;
 
-    if (a.upper.x >= b.upper.x && b.upper.x >= a.lower.x) {
-        c.upper.x = b.upper.x;
-        c.lower.x = a.lower.x;
-        if (b.upper.y < a.upper.y) {
-            c.upper.y = b.upper.y;
-            c.lower.y = a.lower.y;
+    if (a.left.x >= b.left.x && b.left.x >= a.right.x) {
+        c.left.x = b.left.x;
+        c.right.x = a.right.x;
+        if (b.left.y < a.left.y) {
+            c.left.y = b.left.y;
+            c.right.y = a.right.y;
         } else {
-            c.upper.y = a.upper.y;
-            c.lower.y = a.lower.y;
+            c.left.y = a.left.y;
+            c.right.y = a.right.y;
         }
     }
     return c;
 }
 
-int test_rect()
+void test_rect()
 {
+	rect r1{0,0,4,4};
+	rect r2{3,3,6,6};
+	
+	cout << r1 << r2;
+  
+	cout<<"Are the 2 rect overlap ? ";
+	if (isOverlap (r1, r2)) cout<<"true" << endl;
+	else cout<<"false" << endl;
+	
+	r2.setLeft(4,4);
+	cout << r1 << r2;
+	cout<<"Are the 2 rect overlap ? ";
+	if (isOverlap (r1, r2)) cout<<"true" << endl;
+	else cout<<"false" << endl;
 
+}
+
+int main()
+{
+    test_rect();
 }
 
