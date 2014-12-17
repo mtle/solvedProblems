@@ -41,7 +41,7 @@ template<typename T> void evenNumberDivisibleby7x13(T n)
   copy(v.begin(), v.end(), std::ostream_iterator<T>(std::cout,"\n"));
 }
 
-int main()
+void test_evenNumberDivisibleby7x13 ()
 {
   unsigned long n = 1000000000;
   evenNumberDivisibleby7x13<unsigned long>(n);

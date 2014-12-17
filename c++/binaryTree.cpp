@@ -220,7 +220,7 @@ Node<int>* binaryTree<int>::find (int v)
 
 /*************************************************************/
    
-int main()
+void test_binaryTree ()
 {
     vector<int>v{9,2,8,3,19,4,5,10,11,30,1};
     binaryTree<int> *tree = new binaryTree<int>();

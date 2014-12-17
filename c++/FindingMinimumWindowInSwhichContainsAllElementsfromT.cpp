@@ -100,7 +100,7 @@ pair<int,int> minWindow (const string& txt, string const &pat)
 }
 
 /*****************************************************************************/
-int main()
+void test_minWindow ()
 {
     string txt{"ADOBECODEBANC"};
     string pat{"ABC"};

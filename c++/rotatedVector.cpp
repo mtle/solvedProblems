@@ -55,7 +55,8 @@ void rotateVector (vector<int>&v, int k)
     reverseVector(v,v.size()-k,v.size()-1);   
     printv(v);  
 } 
-int main() 
+
+void test_rotateVector () 
 {
   vector<int>v;
   int arr[] = {4,5,6,7,8,9,1,2,3};

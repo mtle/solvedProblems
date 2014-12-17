@@ -33,3 +33,7 @@ will be (c[mid] + c[mid+1])/2.
 */
 
 
+void test_medianOfTwoorderedArrays ()
+{
+
+}

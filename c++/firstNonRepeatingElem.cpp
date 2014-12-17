@@ -68,7 +68,7 @@ void findFirstNonrepeating (const vector<elemType>& s)
     cout<<"the elem is " << s[idx] << endl;
 }
 
-int main()
+void test_findFirstNonrepeating ();
 {
     vector<char> s;
     string str("ABUD ABI abudabi UD");

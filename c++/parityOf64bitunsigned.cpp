@@ -51,7 +51,7 @@ int parity(unsigned n)
   return p;
 }
 
-int main()
+void test_parity()
 {
   unsigned n = 0x78f8ae928a7706cc;
   cout<<:\nparity = " << parity(n) << endl;

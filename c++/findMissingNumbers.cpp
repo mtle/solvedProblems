@@ -115,7 +115,7 @@ template<> puii findTwoMissingNumber_orderedArray<uint> (const vector<uint>& v)
     return findTwoMissingNumber_orderedArray<uint> (v,0,v.size(),2);
 }
 
-void test()
+void test_findMissingNumbers ()
 {
     vi v1{1,2,3,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
     cout <<"missing #: " <<findMissingNumber_orderedArray<uint> (v1);

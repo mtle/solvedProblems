@@ -80,7 +80,7 @@ T kthSmallest (const vector<T> &v1, const vector<T>& v2, int k)
 
 
 /*****************************************************************************/
-int main()
+void test_kthSmallest()
 {
     vi v1{3,6,9,14,33,67,109,345};
     vi v2{2,6,10,11,43,58,77};

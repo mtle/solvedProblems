@@ -81,7 +81,7 @@ template<typename T> void powerSet (vector<T>& s)
 {
 	powerSet(s, s.size());
 }
-int main() 
+void test_powerSet() 
 {
   vector<int>v;
   int arr[] = {4,5,6,7,8,9,1,2,3};

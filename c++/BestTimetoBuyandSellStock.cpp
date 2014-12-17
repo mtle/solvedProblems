@@ -58,7 +58,7 @@ int buySell(vector<int>& v)
 	return max_profit;
 }
 
-int main()
+void test_buySell ()
 {
 	vector<int>v{12,7,8,15,16,11,9,10};
 	cout<<"max profit = " << buySell(v) << endl;

@@ -154,7 +154,7 @@ template<typename T> void bt_memozation(T x, T y)
     print(mat);
 }
 /*****************************************************************************/
-int main()
+void test_uniquePaths ()
 {
 	cout<<"backtrack(2,2): " << backtrack(2,2) << endl;
     cout<<"bt_dp(2,2): " << bt_dp(0,0,2,2) << endl;

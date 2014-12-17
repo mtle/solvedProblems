@@ -59,7 +59,7 @@ bool isMatched (const string& str)
     return false;
 }
 
-void test ()
+void test_bracketsMatch ()
 {
     string s1{"()[]{([])}"};
     string s2{"()[]{([]])}"};

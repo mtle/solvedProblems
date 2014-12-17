@@ -84,7 +84,7 @@ template<typename T> T SieveOfEratosthenes( T N )
     return cnt;
 }
 
-int main()
+void test_Primes()
 {
 	unsigned long long N = 10000000;
     cout<<"\nThere are : " <<SieveOfEratosthenes(N) << "primes less than " << N << endl;

@@ -136,7 +136,7 @@ T kthSmallest (const vector<T> &v, uint k)
 }
 
 /*****************************************************************************/
-int main()
+void test_kthSmallest()
 {
     vi v1{3,6,9,14,33,67,109,345};
     uint k = 7;

@@ -60,7 +60,8 @@
         ++i;
     } 
 } 
- int main()
+
+void test_reverse_words()
  {
      string s="this is a test for reversing words in a string";
  		

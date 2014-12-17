@@ -61,7 +61,8 @@ void combination(int n, int r, vector<char>&src, vector<char>&dst, int sz) {
     }
 }
 
-int main() {
+void test_Perm_Comb () 
+{
     const int N = 5;
     const int R = 3;
     //int *arr = new int[R];

@@ -43,7 +43,7 @@ long makeMultiplativeOutput ( vector<long>& v, size_t idx, long sofar )
   return cur_v * res;
 }
 
-int mail()
+long test_makeMultiplativeOutput ()
 {
   vector<long> v{2,3,1,2};
   makeMultiplativeOutput(v, 0, 1);

@@ -37,7 +37,8 @@ void removeCommas (string& str)
     str[j] = '\0';
     str.resize();
 }
- int main()
+
+void test_removeCommas();
 {
     string s{"123,654,987,012};
     removeCommas(s);

@@ -52,3 +52,7 @@ template<typename T> uint rmDup_unstable (vector<T>& v)
     return sz-v.size();
 }
 
+void test_rmDuplicates ()
+{
+
+}

@@ -48,7 +48,7 @@ template<typename T, typename U> T fastPower(T a, U b)
     return (sign) ? 1.0/result : result;
 }
 
-int main()
+void test_fastPower ()
 {
     long a = 10;
     long b = 3;

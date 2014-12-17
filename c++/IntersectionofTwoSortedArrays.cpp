@@ -87,7 +87,7 @@ void intersect (vector<T>& v1, vector<T>& v2, vector<T>& res)
     } // end while
 }
 /*****************************************************************************/
-int main()
+void test_intersect()
 {
     vi res;
     vi v1{4,6,8,2,5,11,7,32,45,104};
