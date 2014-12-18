@@ -26,15 +26,16 @@ using namespace std;
  * input string. e.g. the answer for k=2 and "abc" are 
  *    aa, bb,cc,ab,ba,ac,ca,bc,cb.
  */
-void perm (string &str, uint m, uint k, uint maxk, vector<char>& res)
+//void perm (string &str, uint n, uint k, uint maxk, vector<char>& res)
+void perm (string &str, uint start, uint k)
 {
-    if (k==maxk) {
-        copy(res.begin(), res.end(), ostream_iterator<char>(cout, " "));
-        return;
+    if (k==str.size()-1) {
+        copy(str.begin(), str.end(), ostream_iterator<char>(cout, " "));
+        cout << endl;
     } else {
-        for (uint i=0; i<k; ++i) {
+        for (uint i=start; i<str.size(); ++i) {
             swap (str[i], str[k]);
-            perm (str, m+1, k, maxk, res);
+            perm (str, start+1, k+1);
             swap (str[i], str[k]);
         }
     }
@@ -42,9 +43,13 @@ void perm (string &str, uint m, uint k, uint maxk, vector<char>& res)
 
 void comb (string &str, uint start, uint k, uint maxk, vector<char>& res)
 {
+#if DEBUG_    
 	static int cnt;
+#endif    
     if (k==maxk) {
+#if DEBUG_    
     	cout<<"iter " << cnt++ << " - ";
+#endif    
         copy(res.begin(), res.end(), ostream_iterator<char>(cout, " "));
         cout<< endl;
         return;
@@ -61,6 +66,13 @@ void stringPermute (string & str, uint k)
 {
     if (str.empty()) return;
 
+    perm (str, 0, 0);
+}
+
+void stringCombination (string & str, uint k)
+{
+    if (str.empty()) return;
+
 	vector<char> res(k,'\0');
 
     comb (str, 0, 0, k, res);
@@ -73,3 +85,5 @@ void test_stringPermute ()
     int k=2;
     stringPermute(s,k);
 }
+
+
