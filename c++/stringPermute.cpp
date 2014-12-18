@@ -18,49 +18,58 @@
 #include <stdexcept>
 #include <cassert>
 
+using namespace std;
+
 /*
  * Given a String with length n, e.g. "abc" (n=3), output all the 
  * strings with length k (k<n) that are consisted from elements in 
  * input string. e.g. the answer for k=2 and "abc" are 
  *    aa, bb,cc,ab,ba,ac,ca,bc,cb.
  */
-void perm (string &str, uint m, uint k, vector<string>& res)
+void perm (string &str, uint m, uint k, uint maxk, vector<char>& res)
 {
-    if (k==m) {
-        res.push_back(str[m]);
+    if (k==maxk) {
+        copy(res.begin(), res.end(), ostream_iterator<char>(cout, " "));
         return;
     } else {
-        for (int i=0; i<k; ++i) {
+        for (uint i=0; i<k; ++i) {
             swap (str[i], str[k]);
-            perm (str, m+1, k, res);
+            perm (str, m+1, k, maxk, res);
             swap (str[i], str[k]);
         }
     }
 }
 
-//void stringPermute (string const & str, uint k, vector<string>& res)
-void stringPermute (string const & str, uint k)
+void comb (string &str, uint start, uint k, uint maxk, vector<char>& res)
+{
+	static int cnt;
+    if (k==maxk) {
+    	cout<<"iter " << cnt++ << " - ";
+        copy(res.begin(), res.end(), ostream_iterator<char>(cout, " "));
+        cout<< endl;
+        return;
+    } else {
+        for (uint i=start; i<str.size(); ++i) {
+            res[k] = str[i];
+            comb (str, start, k+1, maxk, res);
+            
+        }
+    }
+}
+
+void stringPermute (string & str, uint k)
 {
     if (str.empty()) return;
 
-    // first generate dup strings, i.e aa,bb,...
-    for (auto s : str) {
-        string elem{};
-        for (int i=0;i<k;++i) elem += x;
-        res.push_back(elem);
-    }
+	vector<char> res(k,'\0');
 
-    // now generate all permutation of input string
-    perm (const_cast<string>(str),0,k,res);
+    comb (str, 0, 0, k, res);
 
-    copy (res.begin(),res.end(),ostream_iterator<string>(cout," "));
 }
 
 void test_stringPermute ()
 {
-    string s{"abc"};
+    string s{"abcde"};
     int k=2;
     stringPermute(s,k);
 }
-
-

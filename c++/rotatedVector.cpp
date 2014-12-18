@@ -61,32 +61,24 @@ void rotateVector (vector<int>&v, int k)
  * e.g. { 4,4,4,4,4,4,4,3,4,4 }
  * in this case v[lo] = v[hi] = v[mid]
  * */
-int findRotationCount_bsearch (const vi& v, int lo, int hi)
+int findRotationCount_bsearch (const vector<int>& v, int lo, int hi)
 {
     uint mid = (lo + hi) / 2;
 
-    if (mid==0) return min(v[lo],v[hi]);
+    cout<<"\nmid = " << mid << "  v[mid]=" << v[mid] << "  v[lo]=" << v[lo]<< "  v[hi]=" << v[hi];
+    if (mid==lo || mid==hi) 
+        return v[lo]>v[hi] ? hi : lo;
     else if (v[mid] == v[hi] && v[mid] == v[lo]) {
-        int from_lo = findRotation_bsearch (v, lo, mid);
-        int from_hi = findRotation_bsearch (v, mid+1, hi);
-        return min(from_lo ,from_hi);
+        int from_lo = findRotationCount_bsearch (v, lo, mid);
+        int from_hi = findRotationCount_bsearch (v, mid+1, hi);
+        
+        cout<<"\nfrom_lo = " << from_lo << "\tfrom_hi = " << from_hi << endl;
+        return v[from_lo]>v[from_hi] ? from_hi : from_lo;
     } else if (v[mid] > v[hi]) {
-        return findRotation_bsearch (v, mid, hi);
+        return findRotationCount_bsearch (v, mid, hi);
     } else {
-        return findRotation_bsearch (v, lo, mid);
+        return findRotationCount_bsearch (v, lo, mid);
     }
-
-/*    while (v[lo] > v[hi]) {
-
-        int mid = (hi+lo)/2;
-        if (mid==0 || v[lo]==v[hi]) return v[hi];
-        else if (v[mid]>v[hi]) {
-            lo = mid;
-        } else {
-            hi = mid;
-        }
-    } // end while
-*/
 }
 
 void test_rotateVector () 
