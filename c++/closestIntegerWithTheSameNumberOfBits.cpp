@@ -51,7 +51,7 @@ template<typename T> uint bitCount (T x)
     return count;
 }
 
-template<typename T> uint firstBitDifference (T x)
+template<typename T> uint firstOne2ZeroPattern (T x)
 {
 
     uint firstOne = 0;
@@ -74,8 +74,8 @@ template<typename T> uint firstBitDifference (T x)
 
 template<typename T> T nextLargerInteger (T x)
 {
-    uint diff = firstBitDifference (x);
-    return swapBits (x, diff, diff+1);
+    uint firstBitSet = firstOne2ZeroPattern (x);
+    return swapBits (x, firstBitSet, firstBitSet+1);
 
 }
 
