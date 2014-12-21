@@ -29,7 +29,7 @@ template<> class Fraction <int>
 {
 public:
 	Fraction():_numer(0), _denom(1) {}
-	Fraction(int n, int d=1); // : _numer(n), _denom(1) {}
+	Fraction(int n, int d=1);
 	Fraction(const Fraction<int>&);
 	~Fraction(){}
 	Fraction& operator=(const Fraction<int>&);
@@ -86,7 +86,9 @@ private:
 Fraction<int>::Fraction(int n, int d) : _numer(n), _denom(d)
 {
 	if ( d == 0 ) throw ("divideByZero");
+	this->normalize();
 }
+
 Fraction<int>& Fraction<int>::operator=(const Fraction<int>& other)
 {
 	if ( this != &other ) {
@@ -95,6 +97,7 @@ Fraction<int>& Fraction<int>::operator=(const Fraction<int>& other)
 	}
 	return *this;
 }	
+
 Fraction<int>::Fraction(const Fraction<int>& other)
 {
 	_numer = other._numer;
@@ -116,6 +119,7 @@ Fraction<int>& Fraction<int>::operator-=(const Fraction<int>& other)
     return this->normalize();
  
 }
+
 Fraction<int>& Fraction<int>::operator*=(const Fraction<int>& other)
 {
     _numer *= other._numer;
@@ -123,9 +127,11 @@ Fraction<int>& Fraction<int>::operator*=(const Fraction<int>& other)
     return this->normalize();
  
 }
+
 Fraction<int>& Fraction<int>::operator/=(const Fraction<int>& other)
 {
 	if ( other._numer == 0 ) throw ("divideByZero");
+
     _numer *= other._denom;
     _denom *= other._numer;
     return this->normalize();
@@ -134,26 +140,22 @@ Fraction<int>& Fraction<int>::operator/=(const Fraction<int>& other)
 
 Fraction<int>& Fraction<int>::operator+=(int N)
 {
-    _numer += N *_denom;
-    return this->normalize();
+    return  Fraction<int>(*this) += Fraction<int>(N);
 }
+
 Fraction<int>& Fraction<int>::operator-=(int N)
 {
-    _numer -= N *_denom;
-    return this->normalize();
+    return  Fraction<int>(*this) -= Fraction<int>(N);
 }
 
 Fraction<int>& Fraction<int>::operator*=(int N)
 {
-    _numer *= N;
-    return this->normalize();
+    return  Fraction<int>(*this) *= Fraction<int>(N);
 }
 
 Fraction<int>& Fraction<int>::operator/=(int N)
 {
-	if ( N == 0 ) throw ("divideByZero");
-    _denom *= N;
-    return this->normalize();
+    return  Fraction<int>(*this) /= Fraction<int>(N);
 }
 
 /*** Unary operators ***/
@@ -167,15 +169,17 @@ const Fraction<int> Fraction<int>::operator+(const Fraction<int>& other) const
 {
 	return Fraction<int> (*this) += other;
 }
+
 const Fraction<int> Fraction<int>::operator-(const Fraction<int>& other) const
 {
 	return Fraction<int>(*this) -= other;
- 
 }
+
 const Fraction<int> Fraction<int>::operator*(const Fraction<int>& other) const
 {
 	return Fraction<int>(*this) *= other;
 }
+
 const Fraction<int> Fraction<int>::operator/(const Fraction<int>& other) const
 {
 	return Fraction<int>(*this) /= other;
@@ -185,18 +189,20 @@ const Fraction<int> Fraction<int>::operator+(int N) const
 {
 	return Fraction<int>(*this) += N;
 }
+
 const Fraction<int> Fraction<int>::operator-(int N) const
 {
 	return Fraction<int>(*this) -= N;
 }
+
 const Fraction<int> Fraction<int>::operator*(int N) const
 {
 	return Fraction<int>(*this) *= N;
 }
+
 const Fraction<int> Fraction<int>::operator/(int N) const
 {
 	return Fraction<int>(*this) /= N;
- 
 }
 
 /*** Arithmetic functions ***/
@@ -239,7 +245,7 @@ Fraction<int> Fraction<int>::div(int N) const
 {
 	return *this / N;
 }
- 
+/*** Function gcd 
 int Fraction<int>::gcd () const
 {
     int a = _numer;
@@ -255,9 +261,14 @@ int Fraction<int>::gcd () const
 
 	return a;
 }
+
 Fraction<int>& Fraction<int>::normalize()
 {
    int _gcd = gcd();
+   if (( _numer > 0 && _denom < 0) || ( _numer < 0 && _denom < 0)) {
+       _numer = -_numer;
+       _denom = -_denom;
+    }
     _numer /= _gcd;
     _denom /= _gcd;
    
@@ -269,6 +280,7 @@ bool operator==(const Fraction<int>& lhs, const Fraction<int>& rhs)
 {
 	return (lhs._numer==rhs._numer && lhs._denom==rhs._denom);
 }
+
 bool operator!=(const Fraction<int>& lhs,const Fraction<int>& rhs)
 {
 	return !(lhs == rhs);
@@ -279,7 +291,7 @@ ostream& operator<<(ostream& os, const Fraction<int>& frac)
 {
 	if ( frac._numer==0 ) os << 0;
 	else if ( frac._denom==1 ) os << frac._numer;
-	else os << frac._numer <<"/" << frac._denom;
+	else os << "(" << frac._numer <<"/" << frac._denom << ")";
  
 	return os;
 }
@@ -287,10 +299,9 @@ ostream& operator<<(ostream& os, const Fraction<int>& frac)
 } // namespace myFraction
 
 /************************************************************/
- 
 
- 
-int test_fraction()
+
+void test_fraction()
 {
     using namespace myFraction;
 
@@ -304,40 +315,42 @@ int test_fraction()
     cout<<"F3 = " << F3 << endl;
 
     F3 = F1 + F2;
-    /*cout<<"F1 = " << F1 <<"\nF2 = " << F2 << endl;
-      cout<< "F3 = F1 + F2 =  " << F3 << " " << (F1+F2)<< endl;
+    cout<<"---- Test add: " << endl;
+    cout<< "F3 = " << F1 << " + " << F2 << " = " << F3 << "\t" << (F1+F2)<< endl;
+    cout<<F1 <<" + 3 = " << (F1 + 3) << "\tusing add = " << F1.add(3) << endl;
+    cout<<F1 <<" + 0 = " << (F1 + 0)<< "\tusing add = " << F1.add(0)  << endl;
+    cout<<F1 <<" + -3 = " << (F1 + -3) << "\tusing add = " << F1.add(-3) << endl;
 
-      cout<<"F1*F2= " << F1.mul(F2) << "\t" << F1*F2 << endl;
-    //cout<<"F1*-2= " << F1.mul(F2) << "\t" << F1*F2 << endl;
-    //cout<<"F1*1= " << F1.mul(F2) << "\t" << F1*F2 << endl;
-    //cout<<"F1*0= " << F1.mul(F2) << "\t" << F1*F2 << endl;
-
-    cout<<"F1/F2= " << F1.div(F2) << "\t" << (F1/F2)<<endl;
-
-    cout<<"F1 + 3 = " << (F1 + 3) << endl;
-    cout<<"F1 + 0 = " << (F1 + 0) << endl;
-    cout<<"F1 + -3 = " << (F1 + -3) << endl;
-
-    cout<<"F1 - 3 = " << (F1 - 3) << endl;
-    cout<<"F1*3 = " << (F1*3) <<endl;
-    cout<<"F1*5 = " << (F1*5) <<endl;
-    cout<<"F1*-5 = " << (F1*(-5)) <<endl;
-    cout<<"F1*0 = " << (F1*0) <<endl;
-    */
-    cout<<"F1/3 = " << (F1/3) <<endl;
-    cout<<"F1/5 = " << (F1/5) <<endl;
-    cout<<"F1/-5 = " << (F1/(-5)) <<endl;
-    try {
-        F3 = F1 / 0;
-    } catch (string e) {
-        cout<<e<<endl;
-    }
-    //cout<<"F1/0 = " << (F1/0) <<endl;
+    cout<<"---- Test subtract: " << endl;
+    cout<<F1 <<" - 3 = " << (F1 - 3) << "\tusing sub = " << F1.sub(3) << endl;
+    cout<<F3 << " - " << F2 << " = " << (F3-F2) << "\tshould get F1 = " << F1<< endl;
+    cout<<"using sub = " << F3.sub(F2) << "\tshould get F1 = " << F1<< endl;
+    
+    cout<<"---- Test multiply: " << endl;
+    cout<<F1 <<" * " << F2 <<"= " << F1*F2 << "\tusing mul = " << F1.mul(F2) << endl;
+    cout<<F1 <<" * 2 = " << F1*2 << "\tusing mul = " << F1.mul(2) << endl;
+    cout<<F1 <<" * -2 = " << F1*(-2) << "\tusing mul = " << F1.mul(-2) << endl;
+    cout<<F1 <<" * 0 = " << F1*(0) << "\tusing mul = " << F1.mul(-0) << endl;
+	cout<<F1 <<" * 1 = " << F1*(1) << "\tusing mul = " << F1.mul(1) << endl;
+	cout<<F1 <<" * -1 = " << F1*(-1) << "\tusing mul = " << F1.mul(-1) << endl;
+    
+	cout<<"---- Test divide: " << endl;
+    cout<<F1 <<" / " << F2 <<"= " << F1/F2 << "\tusing div = " << F1.div(F2) << endl;
+    cout<<F1 <<" / 2 = " << F1/2 << "\tusing div = " << F1.div(2) << endl;
+    cout<<F1 <<" / -2 = " << F1/(-2) << "\tusing div = " << F1.div(-2) << endl;
+	cout<<F1 <<" * 1 = " << F1/(1) << "\tusing div = " << F1.div(1) << endl;
+	cout<<F1 <<" * -1 = " << F1/(-1) << "\tusing div = " << F1.div(-1) << endl;
+	
+	//cout<<"!!! Error divide by zero..." << endl;
+    //cout<<F1 <<" / 0 = " << F1/(0) << "\tusing div = " << F1.div(-0) << endl;
 
 
     //cout<<"F1.to_Integer() = " <<F1.to_Int()<<endl;
     //cout<<"F1.to_Double() = " <<F1.to_Double()<<endl;  
-    cout<<endl;
 
 }
  
+int main()
+{
+	 test_fraction();
+}
