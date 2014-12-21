@@ -65,6 +65,10 @@ public:
 	Fraction<int> sub(const Fraction<int>&) const;
 	Fraction<int> mul(const Fraction<int>&) const;
 	Fraction<int> div(const Fraction<int>&) const;
+	Fraction<int> add(int) const;
+	Fraction<int> sub(int) const;
+	Fraction<int> mul(int) const;
+	Fraction<int> div(int) const;
  
     // helper functions
     int gcd () const;
@@ -201,9 +205,19 @@ Fraction<int> Fraction<int>::add(const Fraction<int>& frac) const
 	return *this + frac;
 }
  
+Fraction<int> Fraction<int>::add(int N) const
+{
+	return *this + N;
+}
+ 
 Fraction<int> Fraction<int>::sub(const Fraction<int>& frac) const
 {
 	return *this - frac;
+}
+ 
+Fraction<int> Fraction<int>::sub(int N) const
+{
+	return *this - N;
 }
  
 Fraction<int> Fraction<int>::mul(const Fraction<int>& frac) const
@@ -211,9 +225,19 @@ Fraction<int> Fraction<int>::mul(const Fraction<int>& frac) const
 	return *this * frac;
 }
  
+Fraction<int> Fraction<int>::mul(int N) const
+{
+	return *this * N;
+}
+ 
 Fraction<int> Fraction<int>::div(const Fraction<int>& frac) const
 {
 	return *this / frac;
+}
+ 
+Fraction<int> Fraction<int>::div(int N) const
+{
+	return *this / N;
 }
  
 int Fraction<int>::gcd () const
@@ -266,54 +290,54 @@ ostream& operator<<(ostream& os, const Fraction<int>& frac)
  
 
  
-int main()
+int test_fraction()
 {
     using namespace myFraction;
-	
-	Fraction<int> F1(-2,3);
-	Fraction<int> F2(2,9);
-	Fraction<int> F3;
-	
-	cout<<"F1 = " << F1 <<"\nF2 = " << F2 << endl;
-	
-	F3 = -F1;
-	cout<<"F3 = " << F3 << endl;
-	
-	F3 = F1 + F2;
-	/*cout<<"F1 = " << F1 <<"\nF2 = " << F2 << endl;
-	cout<< "F3 = F1 + F2 =  " << F3 << " " << (F1+F2)<< endl;
-	
-	cout<<"F1*F2= " << F1.mul(F2) << "\t" << F1*F2 << endl;
-	//cout<<"F1*-2= " << F1.mul(F2) << "\t" << F1*F2 << endl;
-	//cout<<"F1*1= " << F1.mul(F2) << "\t" << F1*F2 << endl;
-	//cout<<"F1*0= " << F1.mul(F2) << "\t" << F1*F2 << endl;
-	
-	cout<<"F1/F2= " << F1.div(F2) << "\t" << (F1/F2)<<endl;
-    
+
+    Fraction<int> F1(-2,3);
+    Fraction<int> F2(2,9);
+    Fraction<int> F3;
+
+    cout<<"F1 = " << F1 <<"\nF2 = " << F2 << endl;
+
+    F3 = -F1;
+    cout<<"F3 = " << F3 << endl;
+
+    F3 = F1 + F2;
+    /*cout<<"F1 = " << F1 <<"\nF2 = " << F2 << endl;
+      cout<< "F3 = F1 + F2 =  " << F3 << " " << (F1+F2)<< endl;
+
+      cout<<"F1*F2= " << F1.mul(F2) << "\t" << F1*F2 << endl;
+    //cout<<"F1*-2= " << F1.mul(F2) << "\t" << F1*F2 << endl;
+    //cout<<"F1*1= " << F1.mul(F2) << "\t" << F1*F2 << endl;
+    //cout<<"F1*0= " << F1.mul(F2) << "\t" << F1*F2 << endl;
+
+    cout<<"F1/F2= " << F1.div(F2) << "\t" << (F1/F2)<<endl;
+
     cout<<"F1 + 3 = " << (F1 + 3) << endl;
     cout<<"F1 + 0 = " << (F1 + 0) << endl;
     cout<<"F1 + -3 = " << (F1 + -3) << endl;
 
-cout<<"F1 - 3 = " << (F1 - 3) << endl;
-cout<<"F1*3 = " << (F1*3) <<endl;
-cout<<"F1*5 = " << (F1*5) <<endl;
-cout<<"F1*-5 = " << (F1*(-5)) <<endl;
-cout<<"F1*0 = " << (F1*0) <<endl;
-*/
-cout<<"F1/3 = " << (F1/3) <<endl;
-cout<<"F1/5 = " << (F1/5) <<endl;
-cout<<"F1/-5 = " << (F1/(-5)) <<endl;
-try {
-    F3 = F1 / 0;
-} catch (string e) {
-    cout<<e<<endl;
-}
-//cout<<"F1/0 = " << (F1/0) <<endl;
+    cout<<"F1 - 3 = " << (F1 - 3) << endl;
+    cout<<"F1*3 = " << (F1*3) <<endl;
+    cout<<"F1*5 = " << (F1*5) <<endl;
+    cout<<"F1*-5 = " << (F1*(-5)) <<endl;
+    cout<<"F1*0 = " << (F1*0) <<endl;
+    */
+    cout<<"F1/3 = " << (F1/3) <<endl;
+    cout<<"F1/5 = " << (F1/5) <<endl;
+    cout<<"F1/-5 = " << (F1/(-5)) <<endl;
+    try {
+        F3 = F1 / 0;
+    } catch (string e) {
+        cout<<e<<endl;
+    }
+    //cout<<"F1/0 = " << (F1/0) <<endl;
 
 
-//cout<<"F1.to_Integer() = " <<F1.to_Int()<<endl;
-//cout<<"F1.to_Double() = " <<F1.to_Double()<<endl;  
- cout<<endl;
-    
+    //cout<<"F1.to_Integer() = " <<F1.to_Int()<<endl;
+    //cout<<"F1.to_Double() = " <<F1.to_Double()<<endl;  
+    cout<<endl;
+
 }
  
