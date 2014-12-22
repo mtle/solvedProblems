@@ -89,6 +89,12 @@ Fraction<int>::Fraction(int n, int d) : _numer(n), _denom(d)
 	this->normalize();
 }
 
+Fraction<int>::Fraction(const Fraction<int>& other)
+{
+	_numer = other._numer;
+	_denom = other._denom;
+}
+ 
 Fraction<int>& Fraction<int>::operator=(const Fraction<int>& other)
 {
 	if ( this != &other ) {
@@ -98,12 +104,6 @@ Fraction<int>& Fraction<int>::operator=(const Fraction<int>& other)
 	return *this;
 }	
 
-Fraction<int>::Fraction(const Fraction<int>& other)
-{
-	_numer = other._numer;
-	_denom = other._denom;
-}
- 
 /*** Self-assignment operators ***/
 Fraction<int>& Fraction<int>::operator+=(const Fraction<int>& other)
 {
@@ -187,22 +187,22 @@ const Fraction<int> Fraction<int>::operator/(const Fraction<int>& other) const
  
 const Fraction<int> Fraction<int>::operator+(int N) const
 {
-	return Fraction<int>(*this) += N;
+    return  Fraction<int>(*this) += Fraction<int>(N);
 }
 
 const Fraction<int> Fraction<int>::operator-(int N) const
 {
-	return Fraction<int>(*this) -= N;
+    return  Fraction<int>(*this) -= Fraction<int>(N);
 }
 
 const Fraction<int> Fraction<int>::operator*(int N) const
 {
-	return Fraction<int>(*this) *= N;
+    return  Fraction<int>(*this) *= Fraction<int>(N);
 }
 
 const Fraction<int> Fraction<int>::operator/(int N) const
 {
-	return Fraction<int>(*this) /= N;
+    return  Fraction<int>(*this) /= Fraction<int>(N);
 }
 
 /*** Arithmetic functions ***/
@@ -213,6 +213,7 @@ Fraction<int> Fraction<int>::add(const Fraction<int>& frac) const
  
 Fraction<int> Fraction<int>::add(int N) const
 {
+    return *this + Fraction<int>(N);
 	return *this + N;
 }
  
@@ -223,6 +224,7 @@ Fraction<int> Fraction<int>::sub(const Fraction<int>& frac) const
  
 Fraction<int> Fraction<int>::sub(int N) const
 {
+    return *this - Fraction<int>(N);
 	return *this - N;
 }
  
@@ -233,6 +235,7 @@ Fraction<int> Fraction<int>::mul(const Fraction<int>& frac) const
  
 Fraction<int> Fraction<int>::mul(int N) const
 {
+    return *this * Fraction<int>(N);
 	return *this * N;
 }
  
@@ -243,9 +246,14 @@ Fraction<int> Fraction<int>::div(const Fraction<int>& frac) const
  
 Fraction<int> Fraction<int>::div(int N) const
 {
+    return *this / Fraction<int>(N);
 	return *this / N;
 }
 /*** Function gcd 
+ * Compute the greatest common divisor of the numerator and 
+ * the denominator of the fraction.
+ * Return: a common divisor
+ */
 int Fraction<int>::gcd () const
 {
     int a = _numer;
@@ -262,6 +270,11 @@ int Fraction<int>::gcd () const
 	return a;
 }
 
+/*** Function normalize
+ * Apply the gcd computed from gcd() and switch the negative
+ * sign of the fraction.
+ * e.g. (4/-10) -> (-2/5), (-4/-10) -> (2/5)
+ */
 Fraction<int>& Fraction<int>::normalize()
 {
    int _gcd = gcd();
@@ -311,8 +324,8 @@ void test_fraction()
 
     cout<<"F1 = " << F1 <<"\nF2 = " << F2 << endl;
 
-    F3 = -F1;
-    cout<<"F3 = " << F3 << endl;
+    cout<<"---- Test negate: " << endl;
+    cout<<"-F1 = " << -F1 << endl;
 
     F3 = F1 + F2;
     cout<<"---- Test add: " << endl;
@@ -338,8 +351,8 @@ void test_fraction()
     cout<<F1 <<" / " << F2 <<"= " << F1/F2 << "\tusing div = " << F1.div(F2) << endl;
     cout<<F1 <<" / 2 = " << F1/2 << "\tusing div = " << F1.div(2) << endl;
     cout<<F1 <<" / -2 = " << F1/(-2) << "\tusing div = " << F1.div(-2) << endl;
-	cout<<F1 <<" * 1 = " << F1/(1) << "\tusing div = " << F1.div(1) << endl;
-	cout<<F1 <<" * -1 = " << F1/(-1) << "\tusing div = " << F1.div(-1) << endl;
+	cout<<F1 <<" / 1 = " << F1/(1) << "\tusing div = " << F1.div(1) << endl;
+	cout<<F1 <<" / -1 = " << F1/(-1) << "\tusing div = " << F1.div(-1) << endl;
 	
 	//cout<<"!!! Error divide by zero..." << endl;
     //cout<<F1 <<" / 0 = " << F1/(0) << "\tusing div = " << F1.div(-0) << endl;
