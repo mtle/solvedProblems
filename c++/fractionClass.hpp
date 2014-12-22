@@ -214,7 +214,6 @@ Fraction<int> Fraction<int>::add(const Fraction<int>& frac) const
 Fraction<int> Fraction<int>::add(int N) const
 {
     return *this + Fraction<int>(N);
-	return *this + N;
 }
  
 Fraction<int> Fraction<int>::sub(const Fraction<int>& frac) const
@@ -225,7 +224,6 @@ Fraction<int> Fraction<int>::sub(const Fraction<int>& frac) const
 Fraction<int> Fraction<int>::sub(int N) const
 {
     return *this - Fraction<int>(N);
-	return *this - N;
 }
  
 Fraction<int> Fraction<int>::mul(const Fraction<int>& frac) const
@@ -236,7 +234,6 @@ Fraction<int> Fraction<int>::mul(const Fraction<int>& frac) const
 Fraction<int> Fraction<int>::mul(int N) const
 {
     return *this * Fraction<int>(N);
-	return *this * N;
 }
  
 Fraction<int> Fraction<int>::div(const Fraction<int>& frac) const
@@ -247,8 +244,8 @@ Fraction<int> Fraction<int>::div(const Fraction<int>& frac) const
 Fraction<int> Fraction<int>::div(int N) const
 {
     return *this / Fraction<int>(N);
-	return *this / N;
 }
+
 /*** Function gcd 
  * Compute the greatest common divisor of the numerator and 
  * the denominator of the fraction.
