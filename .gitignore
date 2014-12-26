@@ -29,3 +29,8 @@
 
 # python
 *.pyc
+
+# Misc
+*.swp
+*.txt
+
