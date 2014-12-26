@@ -64,11 +64,14 @@ uint coinChange<uint> (const vi& V, uint A)
     }
 }
 
-uint coinChange<uint> (const vi& d, uint A, vi& C, vi& S)
+uint coinChange<uint> (const vi& d, uint A, vi& change)
 {
     if ( d.empty() || A<=0) return 0;
     // C : vector of number of coins
     // S : vector of coins [values] used
+    vi C(A+1), S(A+1);
+    C[0] = 0;
+
     for (int p=1; p<=A; ++p) {
         C[p] = INT_MAX;
 
@@ -81,23 +84,37 @@ uint coinChange<uint> (const vi& d, uint A, vi& C, vi& S)
             }
         }
     }
+    while (A>0) {
+        change.push_back( d[S[A]] );
+        A -= d[S[A]];
+    }
     return C[A];
 }
 
 void test_coinChange()
 {
-    vi V{1,5,10,25};
+    vi cent_denom{1,5,10,25};
+    vi dollar_denom{1,5,10,20,50,100};
     uint A = 77;
 
     cout <<"Number of coin for " << A <<" cent = " << coinChange(V, A);
     cout << endl;
 
-    vi C(A+1), S(A+1);
-
-    cout <<"Number of coin for " << A <<" cent [dp] = " << coinChange_dp(V, A, C, S);
+    vi C;
+    double amount = 187.87;
+    uint dollars = static_cast<uint>(amount);
+    uint cents = static_cast<uint>((amount - dollars)*100);
+    cout <<"Change for " << amount <<":" << endl;
+    cout <<"--- dollar bills: " << coinChange_dp(dollar_denom, dollars, C) << " bills, they are : ";
+    copy (C.begin(), C.end(), ostream_iterator(cout, " "));
     cout << endl;
 
-    copy (S.begin(), S.end(), ostream_iterator(cout, " "));
+    C.clear();
+
+    cout <<"--- coin change : " << coinChange_dp(cent_denom, cents, C) << " coins, they are : ";
+    copy (C.begin(), C.end(), ostream_iterator(cout, " "));
+    cout << endl;
+
     cout << endl;
 }
 
