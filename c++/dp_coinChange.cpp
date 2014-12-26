@@ -50,21 +50,23 @@ typedef pair<uint,uint> puii;
  * base case: 
  *      amount A = 0 - return 0
  *  else
- *      return min{coinChange(V, A-V[0]), coinChange(V,A-V[1], ... )
+ *      return min{makeChange(V, A-V[0]), makeChange(V,A-V[1], ... )
  */ 
-uint coinChange<uint> (const vi& V, uint A)
+uint makeChange (const vi& d, uint A)
 {
-    if (A<0) return INT_MAX;
+    if (A<0) return 10000;
     if (A==0) return 0;
     else {
-        vi C(V.size());
-        for (uint i=0; i<V.size(); ++i) C[i] = coinChange (V,A - V[i]);
-        sort (C.begin(), C.end());
-        return 1 + C[0];
+        vi C(d.size());
+        for (uint i=0; i<d.size(); ++i) {
+            C[i] = 1 + makeChange (d,A - d[i]);
+        }
+        sort (C.begin(), C.end(),std::less<int>());
+        return C[0];
     }
 }
 
-uint coinChange<uint> (const vi& d, uint A, vi& change)
+uint makeChange_dp (const vi& d, uint A, vi& change)
 {
     if ( d.empty() || A<=0) return 0;
     // C : vector of number of coins
@@ -88,16 +90,16 @@ uint coinChange<uint> (const vi& d, uint A, vi& change)
         change.push_back( d[S[A]] );
         A -= d[S[A]];
     }
-    return C[A];
+    return C[C.size()-1];
 }
 
-void test_coinChange()
+void test_makeChange()
 {
     vi cent_denom{1,5,10,25};
     vi dollar_denom{1,5,10,20,50,100};
-    uint A = 77;
+    uint A = 17;
 
-    cout <<"Number of coin for " << A <<" cent = " << coinChange(V, A);
+    cout <<"Number of coin for " << A <<" cent = " << makeChange(cent_denom, A);
     cout << endl;
 
     vi C;
@@ -105,13 +107,13 @@ void test_coinChange()
     uint dollars = static_cast<uint>(amount);
     uint cents = static_cast<uint>((amount - dollars)*100);
     cout <<"Change for " << amount <<":" << endl;
-    cout <<"--- dollar bills: " << coinChange_dp(dollar_denom, dollars, C) << " bills, they are : ";
+    cout <<"--- dollar bills: " << makeChange_dp(dollar_denom, dollars, C) << " bills, they are : ";
     copy (C.begin(), C.end(), ostream_iterator(cout, " "));
     cout << endl;
 
     C.clear();
 
-    cout <<"--- coin change : " << coinChange_dp(cent_denom, cents, C) << " coins, they are : ";
+    cout <<"--- coin change : " << makeChange_dp(cent_denom, cents, C) << " coins, they are : ";
     copy (C.begin(), C.end(), ostream_iterator(cout, " "));
     cout << endl;
 
