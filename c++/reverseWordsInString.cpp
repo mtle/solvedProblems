@@ -6,24 +6,12 @@
  */
  
  #include <iostream>
- #include <sstream>
- #include <iomanip>
  #include <string>
- #include <memory>
- #include <cstdlib>
  #include <vector>
- #include <new>
- //#include <unordered_set>
- //#include <unordered_map>
- #include <set>
- #include <map>
  #include <algorithm>
  #include <utility>
- #include <bitset>
- #include <stdexcept>
- #include <cassert>
  #include <iterator>
- #include <numeric> 
+ #include <cassert>
  
  using namespace std;
  typedef unsigned uint;
@@ -37,27 +25,19 @@
  				swap(s[i], s[j]);
  }
  
- void reverse_words (string& s) 
+ void reverse_str (string& s) 
 {
     reverse_str(s, 0, s.size()-1);
 
-    copy(s.begin(),s.end(),ostream_iterator<char>(cout,""));
-    cout <<endl;
-
     uint start, end;
-    uint i=0,j=0;
-    while (i<s.size()) {
-        if (isalnum(s[i])) {
-            start=i;
-            for (j=i+1; j<s.size(); ++j) 
-                if (isspace(s[j]) || ispunct(s[j])) 
+    for (start=0; start<s.size(); ++start) {
+        if (isalnum(s[start])) {
+            for (end=start+1; end<s.size(); ++end) 
+                if (isspace(s[end]) || ispunct(s[end])) 
                     break;
-            end = j-1;
 
             reverse_str(s,start,end);
-            i = end;
         }
-        ++i;
     } 
 } 
 
@@ -65,7 +45,7 @@ void test_reverse_words()
  {
      string s="this is a test for reversing words in a string";
  		
-     reverse_words(s);
+     reverse_str(s);
      cout<<s<<endl;
  
  }

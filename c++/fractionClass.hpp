@@ -7,12 +7,70 @@
 #include <cassert>
 #include <climits>
 #include <iterator>
+#include <type_traits>
+#include <typeinfo>
+
 using namespace std;
+typedef long long ll;
+typedef unsigned int uint;
+typedef unsigned long ul;
+typedef unsigned long long ull;
 
 namespace myFraction
+/*{
+template<typename T> struct type_name
 {
+    static const char* name() { static_assert(false, "You are missing a DECL_TYPE_NAME"); }
+};
 
-template<typename T> class Fraction
+template<> struct type_name<int> { static const char* name() {return "int";} };
+template<> struct type_name<long> { static const char* name() {return "long";} };
+template<> struct type_name<uint> { static const char* name() {return "unsigned int";} };
+template<> struct type_name<ul> { static const char* name() {return "unsigned long";} };
+template<> struct type_name<ll> { static const char* name() {return "long long";} };
+template<> struct type_name<ull> { static const char* name() {return "unsigned long long";} };
+//template<> struct type_name<Foobar> { static const char* name() {return "Foobar";} };
+
+template<typename Type> bool struct is_validType
+{
+    bool operator()() {
+        return (type_name(Type) == "int" ||
+                type_name(Type) == "long" ||
+                type_name(Type) == "long long" ||
+                type_name(Type) == "unsigned int" ||
+                type_name(Type) == "unsigned long" ||
+                type_name(Type) == "unsigned long long");
+    }
+};*/
+
+template<typename T> struct type_name
+{
+    bool operator()() {  return false; }
+};
+
+template<> struct type_name<int> { bool operator()() { return true";} };
+template<> struct type_name<long> { bool operator()() { return true;} };
+template<> struct type_name<unsigned> { bool operator()() { return true;} };
+template<> struct type_name<ul> { bool operator()() { return true; } };
+template<> struct type_name<ll> { bool operator()() { return true; } };
+template<> struct type_name<ull> { bool operator()() { return true; } };
+//template<> struct type_name<Foobar> { static const char* name() {return "Foobar";} };
+
+template<typename Type> bool struct is_validType
+{
+    bool operator()() {
+        return type_name<Type>();
+    }
+};
+
+/*
+template<class T>
+class A<T, typename std::enable_if<std::is_floating_point<T>::value >::type> {
+}; // note: for this use case, static_assert may be more appropriate
+*/
+template<typename T> 
+class Fraction <T, typename enable_if<is_validType<T>::value>::type>
+//class Fraction <T, typename enable_if<is_integral<T>::value>::type>
 {
 private:
 	T _numer, _denom;
