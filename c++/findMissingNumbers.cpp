@@ -115,6 +115,55 @@ template<> puii findTwoMissingNumber_orderedArray<uint> (const vector<uint>& v)
     return findTwoMissingNumber_orderedArray<uint> (v,0,v.size(),2);
 }
 
+/*
+ * Two numbers are missing from the first hundred numbers. They are 
+ * NOT sorted. How to find them? You can't sort and can't iterate one 
+ * by one has to be less than O(N)? Can't use stack , set or any 
+ * collection interface or in fact any other data structure or array!
+ *
+ * ALGO:
+ * Suppose the maximum element of the array a[] is B i.e. suppose 
+ * a[]={1,2,4} and here 3 and 5 are not present in a[] so max element is B=5
+ *
+ * xor all the elements of the array a to X
+ * xor all the elements from 1 to B to x
+ * find the left most bit set of x by x = x &(~(x-1));
+ * Now if a[i] ^ x == x than xor a[i] to p else xor with q
+ * Now for all k from 1 to B if k ^ x == x than xor with p else xor with q
+ * Now print p and q
+ */
+template<> puii findTwoMissingNumber_UnorderedArray<uint> (const vector<uint>& v)
+{
+    if (v.empty()) return 0;
+    puii missing(0,0);
+    uint xor_all = 0;
+    uint xor_miss = 0;
+
+    for (uint i=0; i<v.size(); ++i) {
+        xor_all ^= i;
+        xor_miss ^= v[i];
+    }
+
+    // find the least significant bit set in xor_miss
+    uint bit_diff = ~(xor_miss - 1) & xor_miss;
+
+    // group the numbers based on bit_diff, i.e. one group has the bit set
+    // the other has it cleared
+    for (uint i=0; i<v.size(); ++i) {
+        if (v[i] ^ bit_diff) missing.one ^= v[i];
+        else missing.two ^= v[i];
+
+    // compare and seperate the two numbers
+    for (uint i=0; i<v.size(); ++i) {
+        if (i ^ bit_diff == bit_diff) missing.one ^= i;
+        else missing.two ^= i;
+
+
+    return missing;
+}
+
+
+/*****************************************************************************/
 void test_findMissingNumbers ()
 {
     vi v1{1,2,3,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
