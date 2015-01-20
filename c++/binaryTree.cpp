@@ -15,7 +15,6 @@
 14. Print right view of binary search tree.
 15. Vertical sum of binary search tree.
 
-http://algorithmsandme.blogspot.ca/p/blog-page_27.html#.VIySytLF94h
 */
 
 #include <iostream>
